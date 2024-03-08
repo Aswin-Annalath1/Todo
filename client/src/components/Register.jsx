@@ -6,7 +6,7 @@ function Register() {
 const navigate = useNavigate()
 const handleregister = async() => {
   //Here datas are posted to the routed Db...
-  fetch('http://localhost:5000/users/register',{
+  fetch('https://todo-wu1c.onrender.com/users/register',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({

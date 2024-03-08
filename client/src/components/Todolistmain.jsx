@@ -15,9 +15,9 @@ const Todolistmain = () => {
   
 //Called for Api call
     useEffect(() => {
-      fetch("http://localhost:5000/todos/"+userid)
+      fetch("https://todo-wu1c.onrender.com/todos/"+userid)
       .then((res) => {return res.json()})
-      .then((data) => {console.log(data)
+      .then((data) => {(data)
   
         //This is to make a normal id number to store with task name...
         data.map((task) => {
@@ -34,7 +34,7 @@ const Todolistmain = () => {
           ]);
         })
       })
-      .catch((err) => {console.log(err)})
+      .catch((err) => {(err)})
     },[])
   
 //Here wew are deleting task..
@@ -42,16 +42,16 @@ const Todolistmain = () => {
       let index = taskList.findIndex((obj) => obj.id === i); //here checking task.id == obj.id
       if (index > -1) {
       //This is removal from BE
-        fetch(`http://localhost:5000/todos/${userid}/${taskList[index]._id}`, {
+        fetch(`https://todo-wu1c.onrender.com/todos/${userid}/${taskList[index]._id}`, {
           method: "DELETE",
           headers: {"Content-Type": "application/json"}})
           .then((res) => {return res.json()})  
-          .then((data) => {console.log(data)
+          .then((data) => {(data)
       //This is removal from FE
              taskList.splice(index, 1);    
              setTaskList([...taskList]);  
           })
-          .catch((err) => {console.log(err)})
+          .catch((err) => {(err)})
           setText("");      
           setEditTaskId(-1); 
       }
@@ -66,12 +66,12 @@ const Todolistmain = () => {
     };
 //Here wew are doing logout...
   const handlelogout = async()=>{
-    fetch('http://localhost:5000/users/logout',{
+    fetch('https://todo-wu1c.onrender.com/users/logout',{
       method:'GET',
       headers:{'Content-Type':'application/json'},
     })
     .then(res=>res.json())
-    .then(data=>{console.log(data) 
+    .then(data=>{(data) 
       navigate("/login")})
     }
 
@@ -79,17 +79,17 @@ const Todolistmain = () => {
   const editStatus = (i) => {
     let index = taskList.findIndex((obj) => obj.id === i);
     if (index > -1) {
-    fetch(`http://localhost:5000/todos/${userid}/status/${taskList[index]._id}`,{
+    fetch(`https://todo-wu1c.onrender.com/todos/${userid}/status/${taskList[index]._id}`,{
       //PUT Method help again to edit by admin if required..
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ status: "Completed"})  //Whatever i write currently in FE 
       })
       .then((res) => {return res.json()})
-      .then((data) => {console.log(data)
+      .then((data) => {(data)
       window.location.reload();
       })
-      .catch((err) => {console.log(err)})
+      .catch((err) => {(err)})
   }
 }    
 return (
@@ -104,7 +104,7 @@ return (
         <button data-collapse-toggle="navbar-default" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
           <span className="sr-only">Open main menu</span>
           <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
           </svg>
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
@@ -117,8 +117,6 @@ return (
         </div>
       </div>
     </nav>
-
-
 
    <div id="app" className="min-w-[400px] w-1/2 mx-auto mt-16">
       <div className="max-w-4xl bg-violet-500 p-4 rounded-lg shadow-lg ">
@@ -144,11 +142,9 @@ return (
             <div key={task.id} className="p-1">
               <div className="flex justify-between items-center">
               <div>
-              {task.time && typeof task.time === 'object' && (
-                  <div style={{ fontSize: 'small', color: 'rgba(0, 0, 0, 0.6)', marginBottom: '5px' }}>
-                    <time>{format(new Date(task.time), "dd-MM/ hh:mm a")}</time>
-                  </div>
-                  )}
+                <div style={{ fontSize: 'small', color: 'rgba(0, 0, 0, 0.6)', marginBottom: '5px' }}>
+                  <time>{format(new Date(task.time), "dd-MM/hh:mm a")}</time>
+                </div>
                   {task.name}
                 </div>
                 <div className="flex ">

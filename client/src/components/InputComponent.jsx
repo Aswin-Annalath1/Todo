@@ -21,13 +21,13 @@ const InputComponent = ({editTaskId,setEditTaskId,taskList,setTaskList,text,setT
     if (taskList.length > 4 && editTaskId < 1){ alert('Maximum 5 Todos Only')}else{
     if (!!text && editTaskId < 1) {
       //This is Adding to BE
-      fetch("http://localhost:5000/todos/"+userid,{
+      fetch("https://todo-wu1c.onrender.com/todos/"+userid,{
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ title: text}) 
       })
       .then((res) => {return res.json()})
-      .then((data) => {console.log(data)
+      .then((data) => {(data)
       //This is Adding to FE
       setTaskList((taskList) => [
         ...taskList,  
@@ -36,12 +36,14 @@ const InputComponent = ({editTaskId,setEditTaskId,taskList,setTaskList,text,setT
           name: text,
           _id: data._id,
           userID: data.userID,
-          status:data.status
+          status:data.status,
+          time:data.createdAt
         },
       ])
       setText("")
+      // window.location.reload();
       })
-      .catch((err) => {console.log(err)})
+      .catch((err) => {(err)})
       return;
     }}
 
@@ -49,15 +51,15 @@ const InputComponent = ({editTaskId,setEditTaskId,taskList,setTaskList,text,setT
     let index = taskList.findIndex((obj) => obj.id === editTaskId);  //editTaskId we got from app.jsx
     if (index > -1) {
 //This is Edited add to BE
-    fetch("http://localhost:5000/todos/"+userid+"/"+taskList[index]._id,{
+    fetch("https://todo-wu1c.onrender.com/todos/"+userid+"/"+taskList[index]._id,{
     //PUT help again edit by admin if required..
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ title: text}) 
       })
       .then((res) => {return res.json()})
-      .then((data) => {console.log(data)})
-      .catch((err) => {console.log(err)})
+      .then((data) => {(data)})
+      .catch((err) => {(err)})
 
 //This is Edited add to FE taskList
       taskList[index].name = text;  //here name is set to current text.
